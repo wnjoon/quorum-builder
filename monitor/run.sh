@@ -1,7 +1,9 @@
 #!/bin/bash
 
-docker-compose down
-rm -Rf prometheus/data
-rm -Rf grafana/data
+docker stop prometheus
+docker rm prometheus
+
+docker stop grafana
+docker rm grafana
 
 docker-compose up -d

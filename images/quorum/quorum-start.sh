@@ -58,7 +58,7 @@ export PRIVATE_CONFIG=ignore
     --http.api admin,trace,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft \
     --ws.api admin,trace,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum,raft \
     --port ${PORT} \
-    --pprof \
-    --metrics 
+    --pprof --pprof.addr 0.0.0.0 --pprof.port 6060 \
+    --metrics
 
 

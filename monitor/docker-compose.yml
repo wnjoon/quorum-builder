@@ -1,38 +1,31 @@
-version: '3.8'
-networks:
-  monitor:
-    driver: bridge
+---
+version: '3.6'
+
 
 services:
   prometheus:
-    image: prom/prometheus:latest
+    image: "prom/prometheus"
     container_name: prometheus
-    user: root
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--web.enable-lifecycle'
     volumes:
-      - ./prometheus/config:/etc/prometheus
-      - ./prometheus:/prometheus
+      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
     ports:
-      - 9090:9090
-    networks:
-      - monitor
-    restart: always
+      - 9090:9090/tcp
+
   grafana:
-    image: grafana/grafana:latest
+    image: "grafana/grafana"
     container_name: grafana
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin123
-      - GF_USER_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ENABLED=true
     volumes:
-      - ./grafana/data:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./config/grafana/provisioning/:/etc/grafana/provisioning/
+      - grafana:/var/lib/grafana
     ports:
-      - 3000:3000
-    depends_on:
-      - prometheus
-    networks:
-      - monitor
-    restart: always
+      - 3000:3000/tcp
+    
+
+volumes:
+  prometheus:
+  grafana:

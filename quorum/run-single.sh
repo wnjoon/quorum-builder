@@ -1,5 +1,13 @@
 #!/bin/bash
 
+if [ -d data ]; then
+    docker stop quorum-single
+    docker rm quorum-single
+    rm -rf data
+    mkdir -p data
+fi
+
+
 PEERIP=localhost
 
 echo "Build single quorum node"
@@ -30,7 +38,9 @@ docker run -d \
 -p 3200${ID}:32000 \
 -p 6300${ID}:63000 \
 -p 3030${ID}:30300 \
+-p 6060:6060 \
+-p 9545:9545 \
 -v $DATADIR/node${ID}:/root/quorum/data \
 --name quorum-single \
-quorum:latest
+test-quorum:latest
 
