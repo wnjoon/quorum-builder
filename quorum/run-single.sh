@@ -42,5 +42,5 @@ docker run -d \
 -p 9545:9545 \
 -v $DATADIR/node${ID}:/root/quorum/data \
 --name quorum-single \
-test-quorum:latest
+quorum:latest
 
